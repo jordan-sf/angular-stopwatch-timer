@@ -1,0 +1,11 @@
+:host {
+  font-size: 2rem;
+}
+.container {
+  display: flex;
+  width: 9em;
+  justify-content: space-between;
+}
+.section {
+  flex: 0 1 auto;
+}

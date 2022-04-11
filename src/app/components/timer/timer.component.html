@@ -1,0 +1,46 @@
+<mat-card #fullScreen (fullscreenchange)="fullScreenChangeHandler($event)" [ngClass]="{'fullscreen': isFullscreen}">
+  <mat-card-title *ngIf="isFullscreen"><h1>Timer</h1></mat-card-title>
+  <mat-card-content>
+    <app-time-display [timeParts]="timeParts" [hideMilliseconds]="true" *ngIf="!doingTimerInput"
+      (click)="doingTimerInput = true"
+      style="cursor: pointer;"
+      [inAlarmState]="inAlarmState"
+      ></app-time-display>
+    <div style="width: 19em; display: flex; font-size: 2rem;" *ngIf="doingTimerInput">
+      <div style="flex: 1 1 auto">
+        <input mat-input [(ngModel)]="timerInput.hours" style="width: 2em; font-size: 2rem;" maxlength="2" placeholder="00"> <span class="unit">h</span>
+      </div>
+      <div style="flex: 1 1 auto">
+        <input mat-input [(ngModel)]="timerInput.minutes" style="width: 2em; font-size: 2rem;" maxLength="2" placeholder="00"> <span class="unit">m</span>
+      </div>
+      <div style="flex: 1 1 auto">
+        <input mat-input [(ngModel)]="timerInput.seconds" style="width: 2em; font-size: 2rem;" maxlength="2" placeholder="00"> <span class="unit">s</span>
+      </div>
+      <button mat-button mat-flat-button color="primary" (click)="doingTimerInput = false; setTimer()">OK</button>
+    </div>
+  </mat-card-content>
+  <mat-card-footer>
+    <mat-progress-bar mode="determinate" [value]="progressBarValue"></mat-progress-bar>
+    <div class="button-panel">
+      <div style="display: flex;">
+        <button mat-button mat-flat-button color="primary" (click)="running ? stop() : start()" [disabled]="!running && !canStart">{{running ? "Stop" : "Start"}}</button>
+        <button mat-button mat-flat-button color="gray" (click)="reset()">Reset</button>
+      </div>
+      <div style="display: flex;">
+        <button mat-button (click)="alarmPlaying ? pauseAlarm() : playAlarm()" [disabled]="!inAlarmState">
+          <mat-icon aria-hidden="false" aria-label="Pause/Play alarm">{{alarmPlaying ? 'volume_off' : 'volume_up'}}</mat-icon>
+        </button>
+        <button mat-button *ngIf="!isFullscreen" (click)="openFullscreen()">
+          <mat-icon aria-hidden="false" aria-label="Show Timer fullscreen">fullscreen</mat-icon>
+        </button>
+        <button mat-button *ngIf="isFullscreen" (click)="closeFullscreen()">
+          <mat-icon aria-hidden="false" aria-label="Exit Timer fullscreen">fullscreen_exit</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-footer>
+  <audio #audioElement loop>
+     <source src="/assets/alarm.mp3" type="audio/mpeg">
+    Your browser does not support the <code>audio</code> element.
+  </audio>
+</mat-card>

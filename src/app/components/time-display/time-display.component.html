@@ -1,0 +1,6 @@
+<div class="container" [ngStyle]="{'color': inAlarmState ? 'red' : 'unset'}">
+  <div class="section">{{timeParts.hours.toString().padStart(2, '0')}}<span class="unit">h</span></div>
+  <div class="section">{{timeParts.minutes.toString().padStart(2, '0')}}<span class="unit">m</span></div>
+  <div class="section">{{timeParts.seconds.toString().padStart(2, '0')}}<span class="unit">s</span></div>
+  <div class="section" style="color: gray;" *ngIf="!hideMilliseconds">{{timeParts.milliseconds.toString().padStart(3, '0')}}<span class="unit" style="font-size: 50%;">ms</span></div>
+</div>

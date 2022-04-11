@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 1rem; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.button-panel {
+  margin: 1em 0;
+  display: flex;
+  justify-content: space-between;
+  .fullscreen & {
+    margin: 1em 1em;
+  }
+}

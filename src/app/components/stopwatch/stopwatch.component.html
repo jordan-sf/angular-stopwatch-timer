@@ -1,0 +1,28 @@
+<mat-card #fullScreen (fullscreenchange)="fullScreenChangeHandler($event)" [ngClass]="{'fullscreen': isFullscreen}">
+  <mat-card-title *ngIf="isFullscreen"><h1>Stopwatch</h1></mat-card-title>
+  <mat-card-content>
+    <app-time-display [timeParts]="timeParts"></app-time-display>
+  </mat-card-content>
+  <mat-card-footer>
+    <!-- Progress bar doesn't make sense for a stopwatch, and if you add an indeterminate one, it's just distracting and superflous animation. User already sees the stopwatch is in motion b/c the numbers are animating (specifically, they're decreasing). -->
+    <mat-progress-bar value="0" mode="determinate"></mat-progress-bar>
+    <div class="button-panel">
+      <div style="display: flex;">
+        <button mat-button mat-flat-button color="primary" mat-button (click)="running ? stop() : start()">{{running ? "Stop" : "Start"}}</button>
+        <button mat-button mat-flat-button color="secondary" mat-button (click)="reset()">Reset</button>
+      </div>
+      <div style="display: flex;">
+        <!-- When would an alarm make sense for a stopwatch? I don't think it does. So, we're hidding the mute/volume button. -->
+        <!-- <button mat-button>
+          <mat-icon aria-hidden="false" aria-label="Example home icon">volume_up</mat-icon>
+        </button> -->
+        <button mat-button *ngIf="!isFullscreen" (click)="openFullscreen()">
+          <mat-icon aria-hidden="false" aria-label="Show Stopwatch fullscreen">fullscreen</mat-icon>
+        </button>
+        <button mat-button *ngIf="isFullscreen" (click)="closeFullscreen()">
+          <mat-icon aria-hidden="false" aria-label="Exit Stopwatch fullscreen">fullscreen_exit</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-footer>
+</mat-card>
