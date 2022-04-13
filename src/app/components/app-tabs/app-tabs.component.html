@@ -2,9 +2,11 @@
   <mat-tab-group>
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon>hourglass_empty</mat-icon> Timer
+        <div class="mat-tab-label-content" [ngClass]="timerAlarmIsPlaying ? 'alarmPlaying' : ''">
+          <mat-icon>hourglass_empty</mat-icon> Timer
+        </div>
       </ng-template>
-      <app-timer></app-timer>
+      <app-timer (onAlarmStateChange)="timerAlarmStateChange($event)"></app-timer>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>

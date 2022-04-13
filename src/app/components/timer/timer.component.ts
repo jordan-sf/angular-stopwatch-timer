@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { elementAt } from 'rxjs';
 import { timeParts } from 'src/app/timeParts';
 
@@ -14,6 +14,7 @@ export class TimerComponent implements AfterViewInit {
   public timeParts: timeParts = {hours: 0, minutes: 0, seconds: 0, milliseconds: 0};
   public canStart = false;
   public alarmPlaying = false;
+  public alarmSoundPlaying = false;
   public inAlarmState = false;
   public isFullscreen = false;
   public progressBarValue = 0;
@@ -26,6 +27,8 @@ export class TimerComponent implements AfterViewInit {
 
   @ViewChild('fullScreen', { read: ElementRef }) containerElement!: ElementRef;
   @ViewChild('audioElement', { read: ElementRef }) audioElement!: ElementRef;
+
+  @Output() onAlarmStateChange = new EventEmitter<boolean>();
 
   constructor() { }
 
@@ -134,14 +137,27 @@ export class TimerComponent implements AfterViewInit {
   }
 
   playAlarm() {
-    const element = this.audioElement.nativeElement;
-    element.play().then(() => this.alarmPlaying = true);
+    this.playAlarmSound();
+    this.alarmPlaying = true
+    this.onAlarmStateChange.emit(true);
   }
 
   pauseAlarm() {
+    this.pauseAlarmSound();
+    this.alarmPlaying = false;
+    this.onAlarmStateChange.emit(false);
+  }
+
+  playAlarmSound() {
+    this.alarmSoundPlaying = true;
+    const element = this.audioElement.nativeElement;
+    element.play();
+  }
+
+  pauseAlarmSound() {
+    this.alarmSoundPlaying = false;
     const element = this.audioElement.nativeElement;
     element.pause();
-    this.alarmPlaying = false;
   }
 
   rewindAlarm() {

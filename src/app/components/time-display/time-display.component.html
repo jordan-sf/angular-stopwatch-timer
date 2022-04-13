@@ -1,4 +1,4 @@
-<div class="container" [ngStyle]="{'color': inAlarmState ? 'red' : 'unset'}">
+<div class="container" [ngClass]="{'alarmPlaying': inAlarmState}">
   <div class="section">{{timeParts.hours.toString().padStart(2, '0')}}<span class="unit">h</span></div>
   <div class="section">{{timeParts.minutes.toString().padStart(2, '0')}}<span class="unit">m</span></div>
   <div class="section">{{timeParts.seconds.toString().padStart(2, '0')}}<span class="unit">s</span></div>

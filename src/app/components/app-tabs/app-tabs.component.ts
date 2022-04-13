@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppTabsComponent implements OnInit {
 
+  public timerAlarmIsPlaying = false;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  timerAlarmStateChange(eventNewValue: boolean) {
+    this.timerAlarmIsPlaying = eventNewValue;
   }
 
 }

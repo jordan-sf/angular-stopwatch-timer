@@ -3,9 +3,10 @@
 }
 .container {
   display: flex;
-  width: 9em;
-  justify-content: space-between;
+  column-gap: .5em;
+  width: fit-content;
 }
-.section {
-  flex: 0 1 auto;
+.unit {
+  filter: opacity(50%);
+  font-size: 70%;
 }
